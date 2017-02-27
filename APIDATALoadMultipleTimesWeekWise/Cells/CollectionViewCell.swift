@@ -17,6 +17,8 @@ class CollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITableView
     var startTime = ""
     @IBOutlet var tableViewOutlet: UITableView!
     
+    @IBOutlet var lblIfDataNotFound: UILabel!
+    
     override func awakeFromNib() {
         tableViewOutlet.delegate = self
         tableViewOutlet.dataSource = self
@@ -63,7 +65,7 @@ class CollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITableView
         for _ in 0..<subjects.count {
             count = count + 1
         }
-        let subjectLabelText = subjects[0] + " \(count - 1)+"
+        let subjectLabelText = subjects[0] + " +\(count - 1)"
         return subjectLabelText
     }
     

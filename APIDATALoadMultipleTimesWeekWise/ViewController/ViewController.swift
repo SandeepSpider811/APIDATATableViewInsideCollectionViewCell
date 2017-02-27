@@ -95,7 +95,7 @@ class ViewController: UIViewController {
     func fetchData(pageNo: Int, lastDate: String) {
         
         SVProgressHUD.show()
-        let param:[String:Any] = ["access_token":"ymaANbhfJT4ARby5IbK2u0hUJQ9T7dk8", "page_no":pageNo, "page_size":"7","date_selected":"2017-02-24","last_date":lastDate]
+        let param:[String:Any] = ["access_token":"ymaANbhfJT4ARby5IbK2u0hUJQ9T7dk8", "page_no":pageNo, "page_size":"7","date_selected":"2017-02-27","last_date":lastDate]
         
         APIHandler.fetchData(urlStr: "instructor-home", parameters: param) { (jsonData) in
             self.instructorData = Mapper<InstructorData>().map(JSONObject: jsonData)
@@ -107,7 +107,6 @@ class ViewController: UIViewController {
                 self.numberOfItemsInCollectionView.append((self.instructorData?.data?[index])!)
             }
             
-            print("countin Arraaaaaaaaaaaaaaa :  \(self.numberOfItemsInCollectionView.count)")
             self.collectionViewOutlet.reloadData()
             SVProgressHUD.dismiss()
         }
@@ -142,7 +141,9 @@ extension ViewController : UICollectionViewDelegate, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
-        
+        if numberOfItemsInCollectionView.count == 0 {
+            cell.lblIfDataNotFound.text = "There is no content for selected day"
+        }
         if statusFlag == 200 {
             cell.detailsDataForEachDate = numberOfItemsInCollectionView[indexPath.item].details!
 //            cell.detailsDataForEachDate = (instructorData?.data?[indexPath.item].details)!
